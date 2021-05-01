@@ -9,7 +9,8 @@ const Connection = new Sequelize(
     '',
     {
         dialect: 'mysql',
-        host: 'localhost'
+        host: 'localhost',
+        logging: false
     }
 )
 

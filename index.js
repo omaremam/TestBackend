@@ -4,8 +4,6 @@ const cors = require('cors')
 const GraphHTTP = require('express-graphql').graphqlHTTP
 const Schema = require('./models/schema')
 
-console.log(Schema)
-
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -35,3 +33,5 @@ app.use('/graphql', GraphHTTP({
 
 const port = 5000;
 app.listen(port, () => console.log('Server running'));
+
+module.exports = app
