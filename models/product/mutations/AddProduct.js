@@ -15,7 +15,7 @@ const addProduct = {
         return db.models.products.create({
             productName: args.productName,
             price: args.price,
-            userId: args.userId,
+            userId: args.userId,  //! userId should be verified but frontend is trusted in this case (FK of user table).
             createdAt: new Date(),
             updatedAt: new Date()
         })

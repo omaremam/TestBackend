@@ -21,12 +21,13 @@ test('Get products Ascending', async (done) => {
         query: `{products(sortPrice:"min"){id,productName,price,userId}}`
     }).set("Accept", "application/json").expect("Content-Type", /json/).expect(200).end(function (err, res) {
         if (err) return done(err);
+        console.log(res.body.data)
         expect(res.body).toBeInstanceOf(Object);
         expect(res.body.data.products).toBeDefined()
         expect(res.body.data.products[0].price).toBeDefined()
         var ascendingFlag = true
         for (i = 0; i < res.body.data.products.length - 1; i++) {
-            if (res.body.data.products[i].price >= res.body.data.products[i + 1].price)
+            if (res.body.data.products[i].price > res.body.data.products[i + 1].price)
                 ascendingFlag = false
         }
         expect(ascendingFlag).toBe(true)
@@ -44,7 +45,7 @@ test('Get products Descending', async (done) => {
         expect(res.body.data.products[0].price).toBeDefined()
         var descendingFlag = true
         for (i = 0; i < res.body.data.products.length - 1; i++) {
-            if (res.body.data.products[i].price <= res.body.data.products[i + 1].price)
+            if (res.body.data.products[i].price < res.body.data.products[i + 1].price)
                 descendingFlag = false
         }
         expect(descendingFlag).toBe(true)
@@ -92,19 +93,20 @@ test('Sign in user', async (done) => {
 
 test('Add product', async (done) => {
     request.post('/graphql').send({
-        query: `mutation addProduct {
-        addProduct(productName: "Test", price: 100, userId: 5){
+        query: `mutation addProducts {
+        addProduct(productName: "Test", price: 100, userId: 1){
             productName
             price
             userId
         }
     }`}).set("Accept", "application/json").expect("Content-Type", /json/).expect(200).end(function (err, res) {
             if (err) return done(err);
+            console.log(res.body.data)
             expect(res.body).toBeInstanceOf(Object);
             expect(res.body.data.addProduct).toBeDefined()
             expect(res.body.data.addProduct.productName).toBe('Test')
             expect(res.body.data.addProduct.price).toBe(100)
-            expect(res.body.data.addProduct.userId).toBe(5)
+            expect(res.body.data.addProduct.userId).toBe(1)
             db.models.products.destroy({ where: { productName: 'Test' } })
             done();
         })

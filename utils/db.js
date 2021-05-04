@@ -4,12 +4,12 @@ const userTable = require('../models/user/UserTable')
 
 
 const Connection = new Sequelize(
-    'test',
-    'root',
-    '',
+    'sql11410105',
+    'sql11410105',
+    'bGpWqny6lX',
     {
         dialect: 'mysql',
-        host: 'localhost',
+        host: 'sql11.freemysqlhosting.net',
         logging: false
     }
 )
@@ -24,8 +24,9 @@ Connection
     });
 //-------------------------------------------------------------------------
 
-let User = Connection.define('users', userTable)
 
+//* Defining sequelize tables
+let User = Connection.define('users', userTable)
 let Product = Connection.define('products', productTable);
 
 //* Relationships
